@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="36" Path="/home/tanyx/Data/Xilinx/Vivado/19 ethernet_test_7020/rgmii_ethernet/eth_test.xpr">
+<Project Version="7" Minor="36" Path="/home/tanyx/Data/Xilinx/Vivado/19 ethernet_test_7020/rgmii_ethernet1/eth_test.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="1883c23fff634d79b72b5669b48123d3"/>

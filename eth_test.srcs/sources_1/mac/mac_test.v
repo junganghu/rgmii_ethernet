@@ -4,7 +4,6 @@
 //Description :
 //
 //////////////////////////////////////////////////////////////////////////////////////
-//`define TEST_SPEED
 `timescale 1 ns/1 ns
 module mac_test
 (
@@ -124,11 +123,7 @@ always @(*)
         end
       WRITE_RAM   :
         begin
-		  `ifdef TEST_SPEED
-		  if (ram_cnt == udp_send_data_length - 1)
-		  `else
           if (write_ram_end) 
-		  `endif
             next_state <= WAIT     ;
           else
             next_state <= WRITE_RAM ;
@@ -144,11 +139,7 @@ always @(*)
         
       WAIT        :
         begin
-		  `ifdef TEST_SPEED  
-          if (wait_cnt == 32'd90)             //frame gap
-		  `else
 		  if (wait_cnt == 32'd125_000_000)    //1s
-		  `endif
             next_state <= CHECK_ARP ;
           else
             next_state <= WAIT ;
@@ -277,11 +268,7 @@ always@(posedge gmii_rx_clk or negedge rst_n)
     else if (write_sel)	 
 		udp_send_data_length <= udp_rec_data_length - 8  ;
 	 else
-	 `ifdef TEST_SPEED 
-       udp_send_data_length <= 16'd1000 ;	 
-	 `else	 
 	   udp_send_data_length <= 4*UDP_DEPTH ;
-	 `endif
   end
   
   
@@ -314,42 +301,6 @@ always@(posedge gmii_tx_clk or negedge rst_n)
   end
   
 
-`ifdef TEST_SPEED
-/*************************************************************/
-//Test ethernet speed
-//reg  [15:0]     ram_cnt ;
-always@(posedge gmii_tx_clk or negedge rst_n)
- begin
-   if(rst_n == 1'b0)
-     ram_cnt <= 11'd0 ;
-   else if (state == WRITE_RAM)
-     ram_cnt <= ram_cnt + 1'b1 ;
-   else
-     ram_cnt <= 11'd0 ;
- end
-
-always@(posedge gmii_tx_clk or negedge rst_n)
- begin
-   if(rst_n == 1'b0)
-     ram_wr_en <= 1'b0 ;
-   else if (state == WRITE_RAM)
-     ram_wr_en <= 1'b1 ;
-   else
-     ram_wr_en <= 1'b0 ;
- end  
- 
-
-always@(posedge gmii_tx_clk or negedge rst_n)
- begin
-   if(rst_n == 1'b0)
-     ram_wr_data <= 8'd0 ;
-   else if (state == WRITE_RAM)
-     ram_wr_data <= ram_cnt[7:0] ;
-   else
-     ram_wr_data <= 8'd0 ;
- end  
-/*************************************************************/
-`else
 always@(posedge gmii_tx_clk or negedge rst_n)
   begin
     if(rst_n == 1'b0)
@@ -396,7 +347,6 @@ always@(posedge gmii_tx_clk or negedge rst_n)
         j <= 0 ;
       end
   end
-`endif
   
 //send udp received data to udp tx ram
 always@(posedge gmii_tx_clk or negedge rst_n)
