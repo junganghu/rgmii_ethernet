@@ -22,8 +22,8 @@ module udp_rx
  input      [15:0]      upper_layer_data_length, 
  output     [7:0]       udp_rec_ram_rdata ,      //udp ram read data
  input      [10:0]      udp_rec_ram_read_addr,   //udp ram read address
- output reg [15:0]      udp_rec_data_length,     //udp data length
- output reg             udp_rec_data_valid       //udp data valid
+ (* MARK_DEBUG="true" *)output reg [15:0]      udp_rec_data_length,     //udp data length
+ (* MARK_DEBUG="true" *)output reg             udp_rec_data_valid       //udp data valid
 );
 
 reg  [15:0]             udp_rx_cnt ;
@@ -34,7 +34,9 @@ reg                     udp_checksum_error ;
 (* MARK_DEBUG="true" *)reg	                    ram_wr_en ;
 reg  [15:0]             udp_data_length ;
 reg                     ip_addr_check_error_d0 ;
-reg  [7:0]              udp_rx_data_d0 ;         //udp data resigster
+(* MARK_DEBUG="true" *)reg  [7:0]              udp_rx_data_d0 ;         //udp data resigster
+(* DONT_TOUCH="true" *) (* MARK_DEBUG="true" *)reg  [15:0]            source_port;
+(* DONT_TOUCH="true" *) (* MARK_DEBUG="true" *)reg  [15:0]            dest_port;
 
 parameter IDLE             =  8'b0000_0001  ;
 parameter REC_HEAD         =  8'b0000_0010  ;
@@ -176,6 +178,26 @@ begin
   else
     udp_rx_cnt <= 16'd0 ;
 end
+
+
+
+always @(posedge clk or negedge rst_n)
+begin
+  if (~rst_n)
+  begin
+    source_port <= 16'd0 ;
+    dest_port <= 16'd0;
+  end
+  else if (state == REC_HEAD)
+    case(udp_rx_cnt)
+    1,2:source_port<={source_port[7:0],udp_rx_data_d0[7:0]};
+    3,4:dest_port<={dest_port[7:0],udp_rx_data_d0[7:0]};
+    default:;
+    endcase
+end
+
+
+
 
 always @(posedge clk or negedge rst_n)
 begin
