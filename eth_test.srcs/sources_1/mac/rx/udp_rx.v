@@ -357,8 +357,6 @@ always @(posedge clk or negedge rst_n)
 begin
   if (~rst_n)
     udp_rec_data_valid <= 1'b0 ;
-	else if (state == REC_END_WAIT)
-		udp_rec_data_valid <= 1'b0 ;
   else if (state == REC_END)
   begin
     if (mac_rec_error)
@@ -366,7 +364,9 @@ begin
 	 else 
       udp_rec_data_valid <= 1'b1 ;
   end
+  else
+    udp_rec_data_valid <= 1'b0 ;
+  
 end
-
 	
 endmodule
