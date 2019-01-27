@@ -65,14 +65,9 @@ mac_top mac_top0
  .rst_n                       (rst_n)  ,
  
  .source_mac_addr             (48'h00_0a_35_01_fe_c0)   ,       //source mac address
- .TTL                         (8'h80),
  .source_ip_addr              (32'hc0a80002),
  .destination_ip_addr         (32'hc0a80003),
- .udp_send_source_port        (16'h1f90),
- .udp_send_destination_port   (16'h1f90),
  
- .ram_wr_data                 () ,
- .ram_wr_en                   (),
  .udp_ram_data_req            (),
  .udp_send_data_length        (),
  .udp_tx_end                  (),

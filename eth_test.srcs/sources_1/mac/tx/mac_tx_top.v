@@ -11,11 +11,8 @@ module mac_tx_top
          
          input  [47:0]        destination_mac_addr   , //destination mac address
          input  [47:0]        source_mac_addr        ,       //source mac address
-         input  [7:0]         TTL,
          input  [31:0]        source_ip_addr,
          input  [31:0]        destination_ip_addr,
-         input  [15:0]        udp_send_source_port,
-         input  [15:0]        udp_send_destination_port,
          
          output               arp_reply_ack,
          input                arp_reply_req,
@@ -24,8 +21,6 @@ module mac_tx_top
          input                arp_request_req,
          
          
-         input  [7:0]         ram_wr_data,
-         input                ram_wr_en,
          input                udp_tx_req,
          output               udp_ram_data_req,
          input  [15:0]        udp_send_data_length,

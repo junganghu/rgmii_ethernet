@@ -11,15 +11,9 @@ module mac_top
          input                rst_n     ,
          
          input  [47:0]        source_mac_addr ,       //source mac address
-         input  [7:0]         TTL,
          input  [31:0]        source_ip_addr,
          input  [31:0]        destination_ip_addr,
-         input  [15:0]        udp_send_source_port,
-         input  [15:0]        udp_send_destination_port,
          
-         
-         input  [7:0]         ram_wr_data,
-         input                ram_wr_en,
          output               udp_ram_data_req,
          input  [15:0]        udp_send_data_length,
          output               udp_tx_end,
@@ -69,12 +63,10 @@ mac_tx_top mac_tx0
             
             .destination_mac_addr        (destination_mac_addr)   , //destination mac address
             .source_mac_addr             (source_mac_addr)   ,       //source mac address
-            .TTL                         (TTL),
+            
             .source_ip_addr              (source_ip_addr),
             .destination_ip_addr         (destination_ip_addr),
             
-            .udp_send_source_port        (udp_send_source_port),
-            .udp_send_destination_port   (udp_send_destination_port),
             
             .arp_reply_ack               (arp_reply_ack ),
             .arp_reply_req               (arp_reply_req ),
@@ -83,8 +75,6 @@ mac_tx_top mac_tx0
             .arp_request_req             (arp_request_req ),
             
             
-            .ram_wr_data                 (ram_wr_data) ,
-            .ram_wr_en                   (ram_wr_en),
             .udp_tx_req                  (udp_tx_req),
             .udp_send_data_length        (udp_send_data_length       ),
             .udp_ram_data_req            (udp_ram_data_req           ),
