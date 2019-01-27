@@ -174,33 +174,7 @@ arp_tx arp_tx0
          .arp_tx_end                 (arp_tx_end              )
        ) ;
        
-       
-ip_tx ip0
-      (
-       .clk                          (clk                        ),
-       .rst_n                        (rst_n                      ),
-       .destination_mac_addr         (destination_mac_addr       ), //destination mac address
-       .source_mac_addr              (source_mac_addr            ),       //source mac address
-       .ip_send_data_length          (ip_send_data_length        ),
-       .TTL                          (TTL                        ),
-       .ip_send_type                 (ip_send_type               ),
-       .source_ip_addr               (source_ip_addr             ),
-       .destination_ip_addr          (destination_ip_addr        ),
-       .upper_layer_data             (upper_layer_data           ),
-       .upper_data_req               (upper_data_req             ),
-       .upper_tx_ready               (upper_tx_ready             ),
-       
-       .mac_data_req                 (mac_data_req               ),
-       .mac_send_end                 (mac_send_end               ),		
-       .mac_tx_ack                   (mac_ip_tx_ack              ),
-       
-       .ip_tx_req                    (ip_tx_req                  ),
-       .ip_tx_ack                    (ip_tx_ack                  ),
-       .ip_tx_ready                  (ip_tx_ready                ),
-       .ip_tx_data                   (ip_tx_data                 ),
-       .ip_tx_end                    (ip_tx_end                  )
-        
-      ) ;
+      
       
 ip_tx_mode ipmode
            (
@@ -230,28 +204,6 @@ ip_tx_mode ipmode
              
            );
            
-udp_tx udp0
-       (
-         .clk                            (clk                        ),
-         .rst_n                          (rst_n                      ),
-         .source_ip_addr                 (source_ip_addr             ),
-         .destination_ip_addr            (destination_ip_addr        ),
-         .udp_send_source_port           (udp_send_source_port       ),
-         .udp_send_destination_port      (udp_send_destination_port  ),
-         .udp_send_data_length           (udp_send_data_length       ),
-         .udp_ram_data_req               (udp_ram_data_req           ),
-         .mac_send_end                   (mac_send_end               ),
-         .ip_tx_req                      (udp_tx_req_tmp             ),
-         .ip_tx_ack                      (ip_tx_ack                  ),
-         .ram_wr_data                    (ram_wr_data                ),
-         .ram_wr_en                      (ram_wr_en                  ),
-         .udp_tx_req                     (udp_tx_req                 ),
-         .udp_data_req                   (upper_data_req             ),
-         .udp_tx_ready                   (udp_tx_ready               ),
-         .udp_tx_data                    (udp_tx_data                ),
-         .udp_tx_end                     (udp_tx_end                 ),
-         .almost_full                    (almost_full                )        
-       ) ;
        
 endmodule
 
